@@ -21,10 +21,17 @@ public class WordCount {
         System.out.println(count(choice, file));
     }
 
+    /**
+     * 根据用户选择，返回字符个数或者单词个数
+     *
+     * @param choice   -c 或者 -w
+     * @param filePath 文件路径（文件名称）
+     * @return 返回统计个数
+     */
     public static int count(String choice, String filePath) {
         String regex = null;
         if (choice.equals("-c")) {
-            regex = "([^a-zA-Z])";
+            regex = "([^a-zA-Z]\n*)";
         } else {
             regex = "\\b([a-zA-Z]+)\\b";
         }
@@ -61,7 +68,7 @@ public class WordCount {
         Matcher matcher = pattern.matcher(exp);
         int count = 0;
         while (matcher.find()) {
-            System.out.println(matcher.group(1));
+//            System.out.println(matcher.group(1));
             count++;
         }
         return count;
