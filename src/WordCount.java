@@ -4,9 +4,12 @@ import java.util.regex.Pattern;
 
 /**
  * 实现读入文本文件，并统计英文字符个数
+ * 更新正则单词的正则表达式，匹配不同格式的单词。
+ * 同时使用FileReader中readLine()方法时，
+ * 在每个字符串末尾拼接换行符\n实现对换行符的统计
  *
  * @author 黄兴鑫
- * @version 0.0
+ * @version 0.1
  */
 public class WordCount {
     public static void main(String[] args) {
@@ -33,7 +36,7 @@ public class WordCount {
         if (choice.equals("-c")) {
             regex = "([^a-zA-Z]\n*)";
         } else {
-            regex = "\\b([a-zA-Z]+)\\b";
+            regex = "\\b([a-zA-Z-']+)\\b";
         }
         File file = new File(filePath);
         BufferedReader reader = null;
@@ -42,7 +45,7 @@ public class WordCount {
             reader = new BufferedReader(new FileReader(file));
             String line = null;
             while ((line = reader.readLine()) != null) {
-                count += countElement(line, regex);
+                count += countElement(line + "\n", regex);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,6 +56,7 @@ public class WordCount {
                 System.out.println(e);
             }
         }
+        if (choice.equals("-c")) count--;
         return count;
     }
 
